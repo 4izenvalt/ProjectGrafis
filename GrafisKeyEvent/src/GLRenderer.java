@@ -1,4 +1,3 @@
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -12,6 +11,8 @@ import javax.media.opengl.glu.GLU;
  * This version is equal to Brian Paul's version 1.2 1999/10/21
  */
 public class GLRenderer implements GLEventListener {
+    float angle = 0;
+
 //class vector untuk memudah vektor-isasi
 
 //float Cx = 0f, Cy = 0f, Cz = 0f;
@@ -100,10 +101,11 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
                 0, -0.00001, 0);//Y kasih 0.1 Biar Gak aneh (Kalo 1 miring)
         gl.glPushMatrix();
         gl.glTranslatef(0f, 0f, -6f);//posisi awal melihat object
+        gl.glRotatef(angle, 1, 1, 0);
        // gl.glRotatef(0.0f, 0.0f, 0.0f, 0.0f);//perputaran object
         Objek.Kubus(gl);
         gl.glPopMatrix();
-// Flush all drawing operations to the graphics card
+           angle += 2.5;
         gl.glFlush();
     }
 

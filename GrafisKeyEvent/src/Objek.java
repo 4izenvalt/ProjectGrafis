@@ -15,7 +15,6 @@ public class Objek {
 //        gl.glColor3f(0.0f, 0.0f, 1.0f); // Warna Biru
 //        gl.glVertex3f(1.0f, -1.0f, 0.0f);
 //        gl.glEnd();
-       
         gl.glBegin(GL.GL_QUADS);
         gl.glColor3f(1.5f, 0.5f, 1.0f);
         gl.glVertex3f(0.0f, 0.0f, 0.0f);
@@ -62,6 +61,7 @@ public class Objek {
         gl.glVertex3f(1.0f, 0.0f, 1.0f);
         gl.glVertex3f(1.0f, 0.0f, 0.0f);
         gl.glVertex3f(0.0f, 0.0f, 0.0f);
+      
         gl.glEnd();
         
     }
