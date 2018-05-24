@@ -52,8 +52,8 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         Ly += speedY;
         Lz += speedZ;
     }
-    float Cx = 5f, Cy = 0f, Cz = 5f;
-    float Lx = 0f, Ly = 0f, Lz = -20f;
+    float Cx = 0f, Cy = 0f, Cz = 0f;
+    float Lx = 0f, Ly = 0f, Lz = -10f;
 
     public void init(GLAutoDrawable drawable) {
 // Use debug pipeline
@@ -73,13 +73,13 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         GL gl = drawable.getGL();
         GLU glu = new GLU();
         if (height <= 0) { // avoid a divide by zero error!
-            height = 1;
+            height = 1;//jangan dirubah
         }
         final float h = (float) width / (float) height;
         gl.glViewport(0, 0, width, height);//Perpindahan Camera
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(60.0f, h, 1.0, 100.0);
+        glu.gluPerspective(60.0f, h, 1.0, 100.0);//100(Batasan View Port)
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -97,10 +97,10 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
 //L : longtitude (melihat pergerakan Sudut)
         glu.gluLookAt(Cx, Cy, Cz,
                 Lx, Ly, Lz,
-                0, 0.1, 0);
+                0, -0.00001, 0);//Y kasih 0.1 Biar Gak aneh (Kalo 1 miring)
         gl.glPushMatrix();
-        gl.glTranslatef(3f, -1f, -5f);
-        gl.glRotatef(0.0f, 0.0f, 0.0f, 1.0f);
+        gl.glTranslatef(0f, 0f, -6f);//posisi awal melihat object
+       // gl.glRotatef(0.0f, 0.0f, 0.0f, 0.0f);//perputaran object
         Objek.Kubus(gl);
         gl.glPopMatrix();
 // Flush all drawing operations to the graphics card
@@ -141,7 +141,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         // Lz = 0f;
         //}
         else {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
+            System.out.println("Tombol Belum Ada");
+      }
     }
 }
