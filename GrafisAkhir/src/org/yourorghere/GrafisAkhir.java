@@ -20,7 +20,7 @@ import javax.media.opengl.glu.GLU;
 public class GrafisAkhir implements GLEventListener {
 
     public static void main(String[] args) {
-        Frame frame = new Frame("Project Akhir Grafis Kubus");
+        Frame frame = new Frame("Project Akhir Grafis");
         GLCanvas canvas = new GLCanvas();
 
         canvas.addGLEventListener(new GrafisAkhir());
