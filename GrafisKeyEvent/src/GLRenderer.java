@@ -107,6 +107,14 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         gl.glPopMatrix();
            angle += 2.5;
         gl.glFlush();
+         gl.glPushMatrix();
+        gl.glTranslatef(2.0f, 1f, -6f);//posisi awal melihat object
+       // gl.glRotatef(angle, 1, 1, 0);
+       // gl.glRotatef(0.0f, 0.0f, 0.0f, 0.0f);//perputaran object
+        Objek.Bola(gl);
+        gl.glPopMatrix();
+       //    angle += 2.5;
+        gl.glFlush();
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
@@ -133,16 +141,7 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
         } else if (keyCode == 65) {
             System.out.println("A");
             vectorMovement(kiri, 0.5f, -0.2f);
-        } //else if(keyCode == 69){
-        //
-        // Cx = 2f;
-        // Cy = -10f;
-        // Cz = 2f;
-        // Lx = 0f;
-        // Ly = 0f;
-        // Lz = 0f;
-        //}
-        else {
+        }else {
             System.out.println("Tombol Belum Ada");
       }
     }
