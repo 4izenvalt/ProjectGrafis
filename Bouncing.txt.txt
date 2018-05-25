@@ -1,0 +1,42 @@
+/*
+ * File: BouncingBallWalls.java
+ * ---------------------
+ * This is exercise 15 in chapter 4 of "The Art and Science of Java."
+ * It requires me to write a program that makes an animated bouncing
+ * ball on the screen, bouncing off the window edges.
+ */
+
+import java.awt.*;
+import acm.program.*;
+import acm.graphics.*;
+
+public class BouncingBallWalls extends GraphicsProgram {
+    public void run() {
+        GOval ball = new GOval (getWidth()/2 - BALL_SIZE/2, getHeight()/2 - BALL_SIZE, BALL_SIZE, BALL_SIZE);               /* Centers the ball */
+        ball.setFilled(true);
+        ball.setFillColor(Color.BLUE);
+        ball.setColor(Color.BLUE);
+        add(ball);
+        double dx = (getWidth()/N_STEPS);
+        double dy = (getWidth()/N_STEPS);
+        while(true) {
+            ball.move(dx, dy);                                   /* Movement for the ball */
+            pause(PAUSE_TIME);
+            if (ball.getY() > getHeight() - BALL_SIZE) {         /* Each "if" statement reverses the direction of the ball on one */
+                dy = dy * -1;                                                         /* axis if it hits a boundry */
+            }
+            if(ball.getX() > getWidth()- BALL_SIZE) {
+                dx = dx * -1;
+            }
+            if(ball.getY() < 0) {
+                dy = dy * -1;
+            }
+            if(ball.getX() < 0) {
+                dx = dx * -1;
+            }
+        }
+    }
+    private static final double N_STEPS = 1000;
+    private static final double PAUSE_TIME = 2;
+    private static final double BALL_SIZE = 50.0;
+} 
