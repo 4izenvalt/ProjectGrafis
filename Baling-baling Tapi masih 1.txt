@@ -1,0 +1,33 @@
+  //Baling"  nya
+
+  gl.glTranslatef(0.5f, -0.2f, -4.0f);
+        gl.glRotatef(angle, -1, 1, 0);
+        gl.glBegin(GL.GL_POLYGON);//depan
+        gl.glColor3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(3.0f, 0.05f, 0.1f);
+        gl.glVertex3f(3.0f, 0.0f, 0.1f);
+        gl.glVertex3f(-3.0f, 0.0f, 0.1f);
+        gl.glVertex3f(-3.0f, 0.05f, 0.1f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);//belakang
+        gl.glColor3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(3.0f, 0.05f, -0.1f);
+        gl.glVertex3f(3.0f, 0.0f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.0f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.05f, -0.1f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);//atas
+        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        gl.glVertex3f(3.0f, 0.05f, 0.1f);
+        gl.glVertex3f(3.0f, 0.05f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.05f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.05f, 0.1f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);//bawah
+        gl.glColor3f(1.0f, 1.0f, 1.0f);
+        gl.glVertex3f(3.0f, 0.0f, 0.1f);
+        gl.glVertex3f(3.0f, 0.0f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.0f, -0.1f);
+        gl.glVertex3f(-3.0f, 0.0f, 0.1f);
+        gl.glEnd();
+        angle += 0.1;

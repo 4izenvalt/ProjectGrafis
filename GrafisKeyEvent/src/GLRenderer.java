@@ -108,12 +108,12 @@ gunakan -1 untuk arah berlawanan dengan vektor awal
            angle += 2.5;
         gl.glFlush();
          gl.glPushMatrix();
-        gl.glTranslatef(2.0f, 1f, -6f);//posisi awal melihat object
-       // gl.glRotatef(angle, 1, 1, 0);
+        gl.glTranslatef(2.0f, 1f, -4f);//posisi awal melihat object
+        gl.glRotatef(angle, 0, 1, 1);
        // gl.glRotatef(0.0f, 0.0f, 0.0f, 0.0f);//perputaran object
         Objek.Bola(gl);
         gl.glPopMatrix();
-       //    angle += 2.5;
+           angle += 2.5;
         gl.glFlush();
     }
 
