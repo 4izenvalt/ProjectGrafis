@@ -238,5 +238,81 @@ public class Objek {
         gl.glVertex3f(1.0f, 1.5f, 0.0f);
         gl.glEnd();
         }
-    
+     static void balingbesar(GL gl){
+             gl.glBegin(GL.GL_POLYGON);//awal atas
+        gl.glVertex3f(5f, 0f, 0f);
+       gl.glVertex3f(5f, 1f, 0f);
+        gl.glVertex3f(-5f, 0f, 0f);
+       gl.glVertex3f(-5f, 1f, 0f);
+        gl.glEnd();
+         gl.glBegin(GL.GL_POLYGON);//bawah
+        gl.glVertex3f(5f, 0f, -0.5f);
+        gl.glVertex3f(5f, 1f, -0.5f);
+        gl.glVertex3f(-5f, 0f, -0.5f);
+       gl.glVertex3f(-5f, 1f, -0.5f);
+        gl.glEnd();
+         gl.glBegin(GL.GL_POLYGON);//tutup 1
+        gl.glVertex3f(5f, 1f, -0.5f);
+        gl.glVertex3f(5f, 1f, 0f);
+        gl.glVertex3f(-5f, 1f, -0.5f);
+        gl.glVertex3f(-5f, 1f, 0f);
+        gl.glEnd();
+         gl.glBegin(GL.GL_POLYGON);//bawah
+        gl.glVertex3f(5f, 1f, 0f);
+        gl.glVertex3f(5f, 1f, -0.5f);
+        gl.glVertex3f(-5f, 1f, 0f);
+        gl.glVertex3f(-5f, 1f, -0.5f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);
+        gl.glVertex3f(5f, 0f, 0f);
+       gl.glVertex3f(5f, 1f, 0f);
+        gl.glVertex3f(5f, 0f, 0f);
+       gl.glVertex3f(5f, 1f, 0f);
+        gl.glEnd();
+        
+        }
+         static void ekor3(GL gl) {
+             gl.glBegin(GL.GL_POLYGON);/*  bagian depan */
+        gl.glNormal3f(-8.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 1.0f);
+        gl.glVertex3f(8.0f, 0.0f, 1.0f);
+        gl.glVertex3f(8.0f, 0.0f, 0.0f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);/*  bagian bawah */
+        gl.glNormal3f(0.0f, 0.0f, -1.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(8.0f, 0.0f, 0.0f);
+        gl.glVertex3f(8.0f, 1.5f, 0.0f);
+        gl.glVertex3f(0.0f, 1.5f, 0.0f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);/*  bagian belakang */
+        gl.glNormal3f(8.0f, 0.0f, 0.0f);
+        gl.glVertex3f(8.0f, 1.5f, 0.0f);
+        gl.glVertex3f(8.0f, 1.5f, 1.0f);
+        gl.glVertex3f(0.0f, 1.5f, 1.0f);
+        gl.glVertex3f(0.0f, 1.5f, 0.0f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);/*  bagian atas */
+        gl.glNormal3f(0.0f, 0.0f, 1.0f);
+        gl.glVertex3f(8.0f, 1.5f, 1.0f);
+        gl.glVertex3f(8.0f, 0.0f, 1.0f);
+        gl.glVertex3f(0.0f, 0.0f, 1.0f);
+        gl.glVertex3f(0.0f, 1.0f, 1.0f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);/*  bagian kiri */
+        gl.glNormal3f(0.0f, 1.5f, 0.0f);
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.5f, 0.0f);
+        gl.glVertex3f(0.0f, 1.5f, 1.0f);
+        gl.glVertex3f(0.0f, 0.0f, 1.0f);
+        gl.glEnd();
+        gl.glBegin(GL.GL_POLYGON);/*  bagian kanan */
+        gl.glNormal3f(0.0f, -1.5f, 0.0f);
+        gl.glVertex3f(8.0f, 0.0f, 0.0f);
+        gl.glVertex3f(8.0f, 0.0f, 1.0f);
+        gl.glVertex3f(8.0f, 1.5f, 1.0f);
+        gl.glVertex3f(8.0f, 1.5f, 0.0f);
+        gl.glEnd();
+        }
 }
