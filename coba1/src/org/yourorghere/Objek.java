@@ -179,8 +179,8 @@ public class Objek {
         gl.glEnd();
         }
         static void baling(GL gl){
-       // gl.glTranslatef(0.5f, -0.2f, -6.0f);
-        
+        //gl.glTranslatef(0.5f, -0.2f, -6.0f);
+       gl.glRotatef(105f, 0f, 3f, 0f); 
         gl.glBegin(GL.GL_POLYGON);//depan
         gl.glColor3f(0.0f, 0.0f, 0.0f);
         gl.glVertex3f(2.0f, 0.02f, 0.05f);
