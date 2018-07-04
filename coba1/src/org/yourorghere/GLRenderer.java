@@ -87,4 +87,3 @@ public class GLRenderer implements GLEventListener {
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
 }
-
