@@ -43,24 +43,6 @@ private int oldMouseY;
 public void init(GLAutoDrawable drawable) {
 GL gl = drawable.getGL();
 gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-gl.glShadeModel(GL.GL_FLAT);
-float ambient[]={1.0f,1.0f,1.0f,1.0f};
-float difusse[]={1.0f,1.0f,1.0f,1.0f};
-float specular[]={0.2f,1.0f,0.2f,1.0f};
-float position[]={20.0f,30.0f,20.0f,0.0f};
-gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, ambient,0);
-gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, difusse,0);
-gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, position,0);
-gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR, specular,0);
-float[] mambient ={ 0.1745f, 0.01175f, 0.01175f, 0.55f
-};
-float[] mdiffuse ={0.61424f, 0.04136f, 0.04136f, 0.55f };
-float[] mspecular ={0.727811f, 0.626959f, 0.626959f, 0.55f };
-float mshine =76.8f ;
-gl.glMaterialfv(GL.GL_FRONT,GL.GL_AMBIENT,mambient,0);
-gl.glMaterialfv(GL.GL_FRONT,GL.GL_DIFFUSE,mdiffuse,0);
-gl.glMaterialfv(GL.GL_FRONT,GL.GL_SPECULAR,mspecular, 0);
-gl.glMaterialf (GL.GL_FRONT,GL.GL_SHININESS,mshine);
 gl.glEnable(GL.GL_LIGHTING);
 gl.glEnable(GL.GL_LIGHT0);
 gl.glEnable(GL.GL_DEPTH_TEST);
