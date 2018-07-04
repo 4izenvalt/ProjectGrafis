@@ -82,11 +82,11 @@ public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionL
        gl.glTranslatef(0.5f, 0.5f, 0.5f);
         gl.glRotatef(view_rotx, 1f, 0.0f, 0.0f);
         gl.glRotatef(view_roty, 0f, 0.1f, 0.0f);
-        gl.glTranslatef(-1f, -10f, -10f);
+      //  gl.glTranslatef(-1f, -10f, -10f);
         Objek.baling(gl);
-//        Objek.kotak(gl);
-//        Objek.segitiga(gl);
-//        Objek.ekor(gl);
+        Objek.kotak(gl);
+        Objek.segitiga(gl);
+        Objek.ekor(gl);
         gl.glFlush();
     }
 
