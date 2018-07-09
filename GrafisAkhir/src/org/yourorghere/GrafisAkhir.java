@@ -16,6 +16,8 @@ import javax.media.opengl.glu.GLU;
 
 public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionListener {
 
+    float angle = 1;
+
     public static void main(String[] args) {
         Frame frame = new Frame("project Tugas Akhir Pemrogaman Grafis");
         GLCanvas canvas = new GLCanvas();
@@ -57,6 +59,7 @@ public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionL
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
         GL gl = drawable.getGL();
         GLU glu = new GLU();
+
         if (height <= 0) {
             height = 1;
         }
@@ -76,18 +79,37 @@ public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionL
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 // Reset the current matrix to the "identity"
         gl.glLoadIdentity();
-        glu.gluLookAt(4, 4, 4, // eye pos
+        glu.gluLookAt(0.1, 0.1, 30, // eye pos
                 0, 0, 0, // look at
                 0, 0, 1); // up
-       gl.glTranslatef(0.5f, 0.5f, 0.5f);
-        gl.glRotatef(view_rotx, 1f, 0.0f, 0.0f);
+        gl.glRotatef(view_rotx, 0.1f, 0.0f, 0.0f);
         gl.glRotatef(view_roty, 0f, 0.1f, 0.0f);
-      //  gl.glTranslatef(-1f, -10f, -10f);
-        Objek.baling(gl);
         Objek.kotak(gl);
+        gl.glPushMatrix(); // nambah
+        gl.glPushMatrix();
+        gl.glPushMatrix();
+//gl.glPushMatrix();
+        gl.glTranslatef(0f, 0f, 0f);
         Objek.segitiga(gl);
+        gl.glPopMatrix(); //
+        gl.glTranslatef(9f, 1f, 0f);
+        gl.glRotatef(angle, 0f, 5f, 0f);
+        Objek.baling(gl);//Baling" belakang
+        gl.glPopMatrix();
+        gl.glTranslatef(1f, 1.75f, -0.1f);
+        gl.glRotatef(90, 1f, 0.0f, 0.0f); //  arah putaran
+        gl.glRotatef(angle, 0.0f, 1.0f, 0.0f); // arah putaran
+//gl.glRotatef(-90f, -1f, 0f, -5f);
+        Objek.baling(gl);
+        gl.glPopMatrix();
+        gl.glTranslatef(1f, 1f, 0f);
         Objek.ekor(gl);
-        gl.glFlush();
+        gl.glPopMatrix();
+        gl.glTranslatef(0f, 0f, 0f);
+        Objek.ekor2(gl);
+        gl.glPopMatrix();
+
+        angle += 2f; // kecepatan berputar
     }
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
