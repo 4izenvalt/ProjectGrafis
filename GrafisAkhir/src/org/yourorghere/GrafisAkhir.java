@@ -2,32 +2,80 @@ package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.EventQueue;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GLCanvas;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.glu.GLU;
+import javax.media.opengl.GLCapabilities;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
-public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionListener {
+public class GrafisAkhir extends JFrame {
 
-    float angle = 1;
+    static {
+// When using a GLCanvas, we have to set the Popup-Menues to be HeavyWeight,
+// so they display properly on top of the GLCanvas
+        JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+    }
+    private Animator animator;
 
-    public static void main(String[] args) {
-        Frame frame = new Frame("project Tugas Akhir Pemrogaman Grafis");
-        GLCanvas canvas = new GLCanvas();
-        canvas.addGLEventListener(new GrafisAkhir());
-        frame.add(canvas);
-        frame.setSize(1200, 800);
-        final Animator animator = new Animator(canvas);
-        frame.addWindowListener(new WindowAdapter() {
+    /**
+     * Creates new form MainFrame
+     */
+    public GrafisAkhir() {
+        initComponents();
+        final GLRenderer glrender = new GLRenderer();
+        KeyListener mylisterner = new KeyListener() {
+            public void keyTyped(KeyEvent e) {
+                System.out.println("typed " + e.getKeyCode());
+            }
+
+            public void keyPressed(KeyEvent e) {
+                System.out.println("pressed " + e.getKeyCode());
+                glrender.Key_Pressed(e.getKeyCode());
+                canvas.repaint();
+            }
+
+            public void keyReleased(KeyEvent e) {
+                System.out.println("released " + e.getKeyCode());
+            }
+        };
+        canvas.addGLEventListener(glrender);
+        Timer mytimer = new Timer();
+        TimerTask mytimertask = new TimerTask() {
+            @Override
+            public void run() {
+//glrender.draw_text(glut, gl);
+                canvas.repaint();
+//To change body of generated methods, choose Tools | Templates.
+            }
+        };
+        mytimer.schedule(mytimertask, 100, 100);
+        addKeyListener(mylisterner);
+        animator = new Animator(canvas);
+        this.setLocationRelativeTo(null);
+        this.setSize(800, 600);
+        animator = new Animator(canvas);
+// This is a workaround for the GLCanvas not adjusting its size, when the frame is resized.
+        canvas.setMinimumSize(new Dimension());
+        this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+// Run this on another thread than the AWT event queue to
+// make sure the call to Animator.stop() completes before
+// exiting
                 new Thread(new Runnable() {
                     public void run() {
                         animator.stop();
@@ -36,114 +84,89 @@ public class GrafisAkhir implements GLEventListener, MouseListener, MouseMotionL
                 }).start();
             }
         });
-// Center frame
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        animator.start();
-    }
-    private float view_rotx = 20.0f;
-    private float view_roty = 30.0f;
-    private int oldMouseX;
-    private int oldMouseY;
-
-    public void init(GLAutoDrawable drawable) {
-        GL gl = drawable.getGL();
-        gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-        gl.glShadeModel(GL.GL_FLAT);
-        gl.glEnable(GL.GL_DEPTH_TEST);
-        gl.glEnable(GL.GL_NORMALIZE);
-        drawable.addMouseListener(this);
-        drawable.addMouseMotionListener(this);
     }
 
-    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-        GL gl = drawable.getGL();
-        GLU glu = new GLU();
-
-        if (height <= 0) {
-            height = 1;
+    @Override
+    public void setVisible(boolean show) {
+        if (!show) {
+            animator.stop();
         }
-        final float h = (float) width / (float) height;
-        gl.glViewport(0, 0, width, height);
-        gl.glMatrixMode(GL.GL_PROJECTION);
-        gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 200.0);
-        gl.glMatrixMode(GL.GL_MODELVIEW);
-        gl.glLoadIdentity();
+        super.setVisible(show);
+        if (!show) {
+            animator.start();
+        }
     }
 
-    public void display(GLAutoDrawable drawable) {
-        GL gl = drawable.getGL();
-        GLU glu = new GLU();
-// Clear the drawing area
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-// Reset the current matrix to the "identity"
-        gl.glLoadIdentity();
-        glu.gluLookAt(0.1, 0.1, 30, // eye pos
-                0, 0, 0, // look at
-                0, 0, 1); // up
-        gl.glRotatef(view_rotx, 0.1f, 0.0f, 0.0f);
-        gl.glRotatef(view_roty, 0f, 0.1f, 0.0f);
-        Objek.kotak(gl);
-        gl.glPushMatrix(); // nambah
-        gl.glPushMatrix();
-        gl.glPushMatrix();
-//gl.glPushMatrix();
-        gl.glTranslatef(0f, 0f, 0f);
-        Objek.segitiga(gl);
-        gl.glPopMatrix(); //
-        gl.glTranslatef(9f, 1f, 0f);
-        gl.glRotatef(angle, 0f, 5f, 0f);
-        Objek.baling(gl);//Baling" belakang
-        gl.glPopMatrix();
-        gl.glTranslatef(1f, 1.75f, -0.1f);
-        gl.glRotatef(90, 1f, 0.0f, 0.0f); //  arah putaran
-        gl.glRotatef(angle, 0.0f, 1.0f, 0.0f); // arah putaran
-//gl.glRotatef(-90f, -1f, 0f, -5f);
-        Objek.baling(gl);
-        gl.glPopMatrix();
-        gl.glTranslatef(1f, 1f, 0f);
-        Objek.ekor(gl);
-        gl.glPopMatrix();
-        gl.glTranslatef(0f, 0f, 0f);
-        Objek.ekor2(gl);
-        gl.glPopMatrix();
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+// <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        JLabel label = new JLabel();
+        canvas = new GLCanvas(createGLCapabilites());
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        label.setText("Gunakan Keyboard untuk menggerakkan kamera");
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(Alignment.LEADING)
+                                .addComponent(canvas, GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                                .addComponent(label))
+                        .addContainerGap())
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(label)
+                        .addPreferredGap(ComponentPlacement.RELATED)
+                        .addComponent(canvas, GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                        .addContainerGap())
+        );
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
-        angle += 2f; // kecepatan berputar
+    /**
+     * Called from within initComponents(). hint: to customize the generated
+     * code choose 'Customize Code' in the contextmenu of the selected UI
+     * Component you wish to cutomize in design mode.
+     *
+     * @return Returns customized GLCapabilities.
+     */
+    private GLCapabilities createGLCapabilites() {
+        GLCapabilities capabilities = new GLCapabilities();
+        capabilities.setHardwareAccelerated(true);
+// try to enable 2x anti aliasing - should be supported on most hardware
+        capabilities.setNumSamples(2);
+        capabilities.setSampleBuffers(true);
+        return capabilities;
     }
 
-    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+// Run this in the AWT event thread to prevent deadlocks and race conditions
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+// switch to system l&f for native font rendering etc.
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ex) {
+                    Logger.getLogger(getClass().getName()).log(Level.INFO, "can not enable system look and feel", ex);
+                }
+                GrafisAkhir frame = new GrafisAkhir();
+                frame.setVisible(true);
+            }
+        });
     }
-
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    public void mouseExited(MouseEvent e) {
-    }
-
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e) {
-        oldMouseX = e.getX();
-        oldMouseY = e.getY();
-    }
-
-    public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
-        Dimension size = e.getComponent().getSize();
-        float thetaY = 360.0f * ((float) (x - oldMouseX) / (float) size.width);
-        float thetaX = 360.0f * ((float) (oldMouseY - y) / (float) size.height);
-        oldMouseX = x;
-        oldMouseY = y;
-        view_rotx += thetaX;
-        view_roty += thetaY;
-    }
-
-    public void mouseMoved(MouseEvent e) {
-    }
+// Variables declaration - do not modify//GEN-BEGIN:variables
+    private GLCanvas canvas;
+// End of variables declaration//GEN-END:variables
 }
