@@ -274,6 +274,8 @@ public class GLRenderer implements GLEventListener {
             depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
             cameraRotation(samping, angle_samping - angle_samping2);
             angle_samping2 = angle_samping;
+            
+            
             //      } //panah kanan
 //        else if (keyCode == 39) {
 //            angle_depanBelakang -= 15f;
