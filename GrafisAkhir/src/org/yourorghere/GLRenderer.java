@@ -156,9 +156,15 @@ public class GLRenderer implements GLEventListener {
         gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
         Objek.ekor(gl);
         gl.glPopMatrix();
+<<<<<<< HEAD
 
         gl.glTranslatef(1f, 1f, -0.15f);
         gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
+=======
+        
+        gl.glTranslatef(1f, 1f, -0.40f); // koordinat berubah x=maju kedepan/belakang , y=kanan/kiri , z=atas/bawah
+        gl.glRotatef(90, 1.0f, 0f, 0.0f);
+>>>>>>> 1ac80dc8aab689d85ca9723cb6ea27f48939fc80
         gl.glRotatef(angle, 0.0f, 1.0f, 0.0f);
         Objek.baling(gl);//baling" depan
         gl.glPopMatrix();
@@ -171,6 +177,11 @@ public class GLRenderer implements GLEventListener {
         gl.glTranslatef(-1.2f, 0.5f, 2.2f);
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.kaki(gl);
+        gl.glPopMatrix(); 
+        
+         gl.glTranslatef(-0.65f, 1f, 0.30f);
+        gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
+        Objek.tiang(gl);
         gl.glPopMatrix();
 
         angle += 40f;
