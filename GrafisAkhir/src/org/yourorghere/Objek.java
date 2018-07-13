@@ -263,4 +263,13 @@ public class Objek {
         gl.glVertex3f(1.5f, 0.3f, 1.0f);
         gl.glEnd();
     }
+    static void tiang(GL gl) {
+        gl.glBegin(GL.GL_POLYGON);
+        gl.glColor3f(0.3f, 0.3f, 0.3f);
+        gl.glVertex3f(1.8f, 0.3f, 0.0f);
+        gl.glVertex3f(1.8f, 0.7f, 0.0f);
+        gl.glVertex3f(1.5f, 0.7f, 0.0f);
+        gl.glVertex3f(1.5f, 0.3f, 0.0f);
+        gl.glEnd();
+    }
 }
