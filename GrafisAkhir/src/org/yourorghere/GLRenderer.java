@@ -69,6 +69,22 @@ public class GLRenderer implements GLEventListener {
     boolean silinder5 = false;//x+
     boolean silinder6 = false;//x-
     boolean kamera2 = false;
+    vector Sumbu_z = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
+    vector Sumbu_x = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
+    vector Sumbu_y = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
+   
+   
+   
+    
+    float sudut_x = 0f;
+    float sudut_x2 = 0f;
+    
+    float sudut_z = 0f;
+    float sudut_z2 = 0f;
+    
+    float sudut_y = 0f;
+    float sudut_y2 = 0f;
+    
     boolean ori = true, silinder = false, kamera = false;
 
     /*
@@ -113,6 +129,7 @@ public class GLRenderer implements GLEventListener {
         Lx = Lx1 + Cx;
         Ly = Ly1 + Cy;
         Lz = Lz1 + Cz;
+    
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -178,22 +195,9 @@ public class GLRenderer implements GLEventListener {
         gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
         Objek.ekor(gl);
         gl.glPopMatrix();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> aec33e81e933f303b951a8730cef8aad226271dc
-
-=======
-        
->>>>>>> parent of 91117a1... Update Kamera
-        gl.glTranslatef(1f, 1f, -0.15f);
-        gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
-=======
         
         gl.glTranslatef(1f, 1f, -0.40f); // koordinat berubah x=maju kedepan/belakang , y=kanan/kiri , z=atas/bawah
         gl.glRotatef(90, 1.0f, 0f, 0.0f);
->>>>>>> 1ac80dc8aab689d85ca9723cb6ea27f48939fc80
         gl.glRotatef(angle, 0.0f, 1.0f, 0.0f);
         Objek.baling(gl);//baling" depan
         gl.glPopMatrix();
@@ -292,6 +296,7 @@ public class GLRenderer implements GLEventListener {
             depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
             cameraRotation(samping, angle_samping - angle_samping2);
             angle_samping2 = angle_samping;
+            
             //      } //panah kanan
 //        else if (keyCode == 39) {
 //            angle_depanBelakang -= 15f;
@@ -306,6 +311,26 @@ public class GLRenderer implements GLEventListener {
 //            vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
 ////cameraRotation(vertikal, angle_samping-angle_samping2);
 //            angle_depanBelakang2 = angle_depanBelakang;
+        }
+    
+    
+    //tombol J
+else if(keyCode == 74){ 
+            sudut_z += 15f; //sudut terhadap z
+            
+            Sumbu_z.vectorRotation(Sumbu_y, sudut_z-sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
+            Sumbu_x.vectorRotation(Sumbu_y, sudut_z-sudut_z2); 
+            cameraRotation(Sumbu_y, sudut_z-sudut_z2); //look at
+            sudut_z2 = sudut_z; //nyimpan sudut akhir
+        }
+//tombol L
+else if(keyCode == 76){
+            sudut_z -= 15f; //sudut terhadap z
+            
+            Sumbu_z.vectorRotation(Sumbu_y, sudut_z-sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
+            Sumbu_x.vectorRotation(Sumbu_y, sudut_z-sudut_z2); 
+            cameraRotation(Sumbu_y, sudut_z-sudut_z2); //look at
+            sudut_z2 = sudut_z; //nyimpan sudut akhir
         }
     }
 }
