@@ -95,7 +95,7 @@ public class GLRenderer implements GLEventListener {
         glu.gluLookAt(Cx, Cy, Cz, Lx, Ly, Lz, naik.x, naik.y, naik.z);
         gl.glTranslatef(0.0f, 0.0f, -15f);
         gl.glRotatef(silinderAngle, 1f, 0f, 0f);//x +(mutar depan)
-        gl.glRotatef(silinderAngle1, 0f, 0f, 1f);//z +(tapi mutarnya Y +)
+        gl.glRotatef(silinderAngle1, 0f, 0f, 1f);//z +(tapi mutarnya Y -)
         gl.glRotatef(-90, 0.0f, 0.0f, 1.0f);
         gl.glPushMatrix();
         Objek.kotak(gl);
