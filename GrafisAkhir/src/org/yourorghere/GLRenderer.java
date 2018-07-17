@@ -8,7 +8,8 @@ import javax.media.opengl.glu.GLU;
 public class GLRenderer implements GLEventListener {
 //class vector untuk memudah vektor-isasi
 
-    float angle = 0;
+    float angle = 1;
+    float angle1 = 1;
 
     class vector {
 
@@ -22,69 +23,18 @@ public class GLRenderer implements GLEventListener {
             z = startZ;
         }
 
-        void vectorRotation(vector reference, float angle) {
-            vector temp = reference;
-            float magnitude = (float) Math.sqrt(Math.pow(temp.x, 2) + Math.pow(temp.y, 2) + Math.pow(temp.z, 2));
-            temp.x = temp.x / magnitude;
-            temp.y = temp.y / magnitude;
-            temp.z = temp.z / magnitude;
-            float dot_product = (x * temp.x) + (y * temp.y) + (z * temp.z);
-            float cross_product_x = (y * temp.z) - (temp.z * z);
-            float cross_product_y = -((x * temp.z) - (z * temp.x));
-            float cross_product_z = (x * temp.y) - (y * temp.x);
-            float last_factor_rodrigues = (float) (1 - Math.cos(Math.toRadians(angle % 360)));
-            x = (float) ((x * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_x * Math.sin(Math.toRadians(angle % 360)))
-                    + (dot_product * last_factor_rodrigues * x));
-            y = (float) ((this.y * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_y * Math.sin(Math.toRadians(angle % 360)))
-                    + (dot_product * last_factor_rodrigues * y));
-            z = (float) ((z * Math.cos(Math.toRadians(angle % 360)))
-                    + (cross_product_z * Math.sin(Math.toRadians(angle % 360)))
-                    + (dot_product * last_factor_rodrigues * z));
-        }
+        
     }
-    vector depanBelakang = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
-    vector samping = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector vertikal = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
-    float Cx = 0, Cy = 2.5f, Cz = 0;
-    float Lx = 0, Ly = 2.5f, Lz = -20f;
-    float angle_depanBelakang = 0f;
-    float angle_depanBelakang2 = 0f;
-    float angle_samping = 0f;
-    float angle_samping2 = 0f;
-    float angle_vertikal = 0f;
-    float angle_vertikal2 = 0f;
+    vector depan = new vector(0f, 0f, 1f);//deklarasi awal vektor untuk depan[Sumbu Z]
+    vector kanan = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan[Sumbu X]
+    vector naik = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik[Sumbu Y]
+
+    float Cx = 0, Cy = 0f, Cz = 0;
+    float Lx = 0, Ly = 0f, Lz = -20f;
     float silinderAngle = 90f;
-    float silinderAngle1 = 90f;//z+
-    float silinderAngle2 = 90f;//z-
-    float silinderAngle3 = 90f;//y+
-    float silinderAngle4 = 90f;//y-
-    float silinderAngle5 = 90f;//x+
-    float silinderAngle6 = 90f;//x-
-    boolean silinder1 = false;//z+
-    boolean silinder2 = false;//z-
-    boolean silinder3 = false;//y+
-    boolean silinder4 = false;//y-
-    boolean silinder5 = false;//x+
-    boolean silinder6 = false;//x-
+    float silinderAngle1 = 90f;
+    boolean silinder1 = false;
     boolean kamera2 = false;
-    vector Sumbu_z = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
-    vector Sumbu_x = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector Sumbu_y = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
-   
-   
-   
-    
-    float sudut_x = 0f;
-    float sudut_x2 = 0f;
-    
-    float sudut_z = 0f;
-    float sudut_z2 = 0f;
-    
-    float sudut_y = 0f;
-    float sudut_y2 = 0f;
-    
     boolean ori = true, silinder = false, kamera = false;
 
     /*
@@ -104,33 +54,7 @@ public class GLRenderer implements GLEventListener {
         Lz += speedZ;
     }
 
-    private void cameraRotation(vector reference, double angle) {
-        float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));//magnitud
-        float Up_x1 = reference.x / M; //melakukan
-        float Up_y1 = reference.y / M; //normalisasi
-        float Up_z1 = reference.z / M; //vektor patokan
-        float VLx = Lx - Cx;
-        float VLy = Ly - Cy;
-        float VLz = Lz - Cz;
-        float dot_product = (VLx * Up_x1) + (VLy * Up_y1) + (VLz * Up_z1);
-        float cross_product_x = (Up_y1 * VLz) - (VLy * Up_z1);
-        float cross_product_y = -((Up_x1 * VLz) - (Up_z1 * VLx));
-        float cross_product_z = (Up_x1 * VLy) - (Up_y1 * VLx);
-        float last_factor_rodriques = (float) (1 - Math.cos(Math.toRadians(angle % 360)));
-        float Lx1 = (float) ((VLx * Math.cos(Math.toRadians(angle % 360)))
-                + (cross_product_x * Math.sin(Math.toRadians(angle % 360)))
-                + (dot_product * last_factor_rodriques * VLx));
-        float Ly1 = (float) ((VLy * Math.cos(Math.toRadians(angle % 360)))
-                + (cross_product_y * Math.sin(Math.toRadians(angle % 360)))
-                + (dot_product * last_factor_rodriques * VLy));
-        float Lz1 = (float) ((VLz * Math.cos(Math.toRadians(angle % 360)))
-                + (cross_product_z * Math.sin(Math.toRadians(angle % 360)))
-                + (dot_product * last_factor_rodriques * VLz));
-        Lx = Lx1 + Cx;
-        Ly = Ly1 + Cy;
-        Lz = Lz1 + Cz;
-    
-    }
+   
 
     public void init(GLAutoDrawable drawable) {
 // Use debug pipeline
@@ -166,21 +90,14 @@ public class GLRenderer implements GLEventListener {
         GLU glu = new GLU();
 // Clear the drawing area
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-// Reset the current matrix to the "identity"
+// Reset the current matrix to the "identity" 
         gl.glLoadIdentity();
-// Move the "drawing cursor" around
-        glu.gluLookAt(Cx, Cy, Cz,
-                Lx, Ly, Lz,
-                vertikal.x, vertikal.y, vertikal.z);
+        glu.gluLookAt(Cx, Cy, Cz, Lx, Ly, Lz, naik.x, naik.y, naik.z);
+        gl.glTranslatef(0.0f, 0.0f, -15f);
+        gl.glRotatef(silinderAngle, 1f, 0f, 0f);//x +(mutar depan)
+        gl.glRotatef(silinderAngle1, 0f, 0f, 1f);//z +(tapi mutarnya Y +)
+        gl.glRotatef(-90, 0.0f, 0.0f, 1.0f);
         gl.glPushMatrix();
-        gl.glTranslatef(-0.5f, 1.5f, -18f);
-        gl.glRotatef(silinderAngle, 1f, 0f, 0f);
-        gl.glRotatef(silinderAngle1, 0f, 0f, 1f);//z+
-        gl.glRotatef(silinderAngle2, 0f, 0f, -1f);//z-
-        gl.glRotatef(silinderAngle3, 0f, 1f, 0f);//y+
-        gl.glRotatef(silinderAngle4, 0f, -1f, 0f);//y-
-        gl.glRotatef(silinderAngle5, 1f, 0f, 0f);//x+
-        gl.glRotatef(silinderAngle6, -1f, 0f, 0f);//x-
         Objek.kotak(gl);
         gl.glPushMatrix();
         gl.glPushMatrix();
@@ -190,54 +107,39 @@ public class GLRenderer implements GLEventListener {
         Objek.segitiga(gl);
         gl.glPopMatrix();
 
-        
         gl.glTranslatef(1.5f, 1.5f, 0f);
         gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
         Objek.ekor(gl);
         gl.glPopMatrix();
-        
-        gl.glTranslatef(1f, 1f, -0.40f); // koordinat berubah x=maju kedepan/belakang , y=kanan/kiri , z=atas/bawah
-        gl.glRotatef(90, 1.0f, 0f, 0.0f);
+
+        gl.glTranslatef(1.0f, 1.0f, -0.45f);
+        gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
         gl.glRotatef(angle, 0.0f, 1.0f, 0.0f);
         Objek.baling(gl);//baling" depan
         gl.glPopMatrix();
-        
+
         gl.glTranslatef(4.8f, 1.55f, 0.2f);
         gl.glRotatef(angle, 0f, 1f, 0f);
         Objek.balingKecil(gl);//baling" belakang
         gl.glPopMatrix();
-        
+
         gl.glTranslatef(-1.2f, 0.5f, 2.2f);
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.kaki(gl);
-        gl.glPopMatrix(); 
+        gl.glPopMatrix();
         
-         gl.glTranslatef(-0.65f, 1f, 0.30f);
+        gl.glTranslatef(-0.65f, 1f, 0.30f);
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.tiang(gl);
-        gl.glPopMatrix();
 
-        angle += 4f;
+        angle += 40f;
+        angle1 += 10f;
+
         if (silinder) {
             silinderAngle += 15f;
         }
         if (silinder1) {
             silinderAngle1 += 15f;
-        }
-        if (silinder2) {
-            silinderAngle2 += 15f;
-        }
-        if (silinder3) {
-            silinderAngle3 += 15f;
-        }
-        if (silinder4) {
-            silinderAngle4 += 15f;
-        }
-        if (silinder5) {
-            silinderAngle5 += 15f;
-        }
-        if (silinder6) {
-            silinderAngle6 += 15f;
         }
         if (kamera) {
             Key_Pressed(74);
@@ -249,88 +151,44 @@ public class GLRenderer implements GLEventListener {
     }
 
     void Key_Pressed(int keyCode) {
-        //huruf A
-        if (keyCode == 65) {
-            vectorMovement(samping, 2f, 1f);
-        } //huruf B
-        else if (keyCode == 66) {
-            vectorMovement(vertikal, 2f, 1f);
-        } //huruf C
-        else if (keyCode == 67) {
-            vectorMovement(depanBelakang, 2f, 1f);
+        //huruf W
+        if (keyCode == 87) {
+            vectorMovement(kanan, 0.5f, 1f);
+            System.out.println("Maju depan X Plus");
+        } //huruf S
+        else if (keyCode == 83) {
+            vectorMovement(kanan, 0.5f, -1f);
+            System.out.println("Mundur Belakang X Minus");
+        } //huruf D
+        else if (keyCode == 68) {
+            vectorMovement(depan, 0.5f, 1f);
+            System.out.println("Kanan Belakang Z Plus");
+
+        } //huruf A
+        else if (keyCode == 65) {
+            vectorMovement(depan, 0.5f, -1f);
+            System.out.println("Kiri depan Z Minus");
+        } //panah atas
+        else if (keyCode == 38) {
+            vectorMovement(naik, 0.5f, 1f);
         } //panah bawah
         else if (keyCode == 40) {
-            vectorMovement(vertikal, 2f, -1f);
-        } //tombol spasi
-        else if (keyCode == 32) {
+            vectorMovement(naik, 0.5f, -1f);
+        } //tombol 1
+        else if (keyCode == 49) {
             if (silinder) {
                 silinder = false;
             } else {
                 silinder = true;
             }
-        } //panah Kiri
-        else if (keyCode == 37) {
-            angle_vertikal += 15f;
-            samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-            angle_vertikal2 = angle_vertikal;
-        } //panah kanan
-        else if (keyCode == 39) {
-            angle_vertikal -= 15f;
-            samping.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            depanBelakang.vectorRotation(vertikal, angle_vertikal - angle_vertikal2);
-            cameraRotation(vertikal, angle_vertikal - angle_vertikal2);
-            angle_vertikal2 = angle_vertikal;
-        } //panah atas
-        else if (keyCode == 38) {
-            angle_samping -= 15f;
-//vertikal.vectorRotation(samping, angle_samping-angle_samping2);
-            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-            cameraRotation(samping, angle_samping - angle_samping2);
-            angle_samping2 = angle_samping;
-        } //panah bawah
-        else if (keyCode == 40) {
-            angle_samping += 15f;
-//vertikal.vectorRotation(samping, angle_samping-angle_samping2);
-            depanBelakang.vectorRotation(samping, angle_samping - angle_samping2);
-            cameraRotation(samping, angle_samping - angle_samping2);
-            angle_samping2 = angle_samping;
+        } //tombol 2
+        else if (keyCode == 50) {
+            if (silinder1) {
+                silinder1 = false;
+            } else {
+                silinder1 = true;
+            }
             
-            //      } //panah kanan
-//        else if (keyCode == 39) {
-//            angle_depanBelakang -= 15f;
-//            samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-//            vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-////cameraRotation(vertikal, angle_samping-angle_samping2);
-//            angle_depanBelakang2 = angle_depanBelakang;
-//        } //panah kiri
-//        else if (keyCode == 37) {
-//            angle_depanBelakang += 15f;
-//            samping.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-//            vertikal.vectorRotation(depanBelakang, angle_depanBelakang - angle_depanBelakang2);
-////cameraRotation(vertikal, angle_samping-angle_samping2);
-//            angle_depanBelakang2 = angle_depanBelakang;
-        }
-    
-    
-    //tombol J
-else if(keyCode == 74){ 
-            sudut_z += 15f; //sudut terhadap z
-            
-            Sumbu_z.vectorRotation(Sumbu_y, sudut_z-sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_y, sudut_z-sudut_z2); 
-            cameraRotation(Sumbu_y, sudut_z-sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
-        }
-//tombol L
-else if(keyCode == 76){
-            sudut_z -= 15f; //sudut terhadap z
-            
-            Sumbu_z.vectorRotation(Sumbu_y, sudut_z-sudut_z2); //memutar vector sumbu z terhadap x (target, patokan)
-            Sumbu_x.vectorRotation(Sumbu_y, sudut_z-sudut_z2); 
-            cameraRotation(Sumbu_y, sudut_z-sudut_z2); //look at
-            sudut_z2 = sudut_z; //nyimpan sudut akhir
         }
     }
 }
