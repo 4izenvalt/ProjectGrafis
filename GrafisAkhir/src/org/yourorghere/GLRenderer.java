@@ -1,5 +1,4 @@
 package org.yourorghere;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -8,9 +7,7 @@ import javax.media.opengl.glu.GLU;
 public class GLRenderer implements GLEventListener {
 //class vector untuk memudah vektor-isasi
 
-    float angle = 1;
-    float angle1 = 1;
-
+ 
     class vector {
 
         float x;
@@ -23,7 +20,6 @@ public class GLRenderer implements GLEventListener {
             z = startZ;
         }
 
-        
     }
     vector depan = new vector(0f, 0f, 1f);//deklarasi awal vektor untuk depan[Sumbu Z]
     vector kanan = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan[Sumbu X]
@@ -33,7 +29,13 @@ public class GLRenderer implements GLEventListener {
     float Lx = 0, Ly = 0f, Lz = -20f;
     float silinderAngle = 90f;
     float silinderAngle1 = 90f;
+    float silinderAngle2 = 90f;
+    float baling = 1;
+    float baling1 = 1;
+    boolean angle = false;
+    boolean angle1 = false;
     boolean silinder1 = false;
+    boolean silinder2 = false;
     boolean kamera2 = false;
     boolean ori = true, silinder = false, kamera = false;
 
@@ -53,8 +55,6 @@ public class GLRenderer implements GLEventListener {
         Ly += speedY;
         Lz += speedZ;
     }
-
-   
 
     public void init(GLAutoDrawable drawable) {
 // Use debug pipeline
@@ -93,10 +93,14 @@ public class GLRenderer implements GLEventListener {
 // Reset the current matrix to the "identity" 
         gl.glLoadIdentity();
         glu.gluLookAt(Cx, Cy, Cz, Lx, Ly, Lz, naik.x, naik.y, naik.z);
+
         gl.glTranslatef(0.0f, 0.0f, -15f);
+
         gl.glRotatef(silinderAngle, 1f, 0f, 0f);//x +(mutar depan)
         gl.glRotatef(silinderAngle1, 0f, 0f, 1f);//z +(tapi mutarnya Y -)
+        gl.glRotatef(silinderAngle2, -1f, 0f, 0f);//x -(malah mutarnya Z -)
         gl.glRotatef(-90, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(90, 0.0f, 1.0f, 0.0f);
         gl.glPushMatrix();
         Objek.kotak(gl);
         gl.glPushMatrix();
@@ -114,12 +118,12 @@ public class GLRenderer implements GLEventListener {
 
         gl.glTranslatef(1.0f, 1.0f, -0.45f);
         gl.glRotatef(90, 1.0f, 0.0f, 0.0f);
-        gl.glRotatef(angle, 0.0f, 1.0f, 0.0f);
+        gl.glRotatef(baling, 0.0f, 1.0f, 0.0f);
         Objek.baling(gl);//baling" depan
         gl.glPopMatrix();
 
         gl.glTranslatef(4.8f, 1.55f, 0.2f);
-        gl.glRotatef(angle, 0f, 1f, 0f);
+        gl.glRotatef(baling1, 0f, 1f, 0f);
         Objek.balingKecil(gl);//baling" belakang
         gl.glPopMatrix();
 
@@ -127,22 +131,27 @@ public class GLRenderer implements GLEventListener {
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.kaki(gl);
         gl.glPopMatrix();
-        
+
         gl.glTranslatef(-0.65f, 1f, 0.30f);
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.tiang(gl);
 
-        angle += 40f;
-        angle1 += 10f;
-
+//        angle += 40f;
+//        angle1 += 10f;
         if (silinder) {
             silinderAngle += 15f;
         }
         if (silinder1) {
             silinderAngle1 += 15f;
         }
-        if (kamera) {
-            Key_Pressed(74);
+        if (silinder2) {
+            silinderAngle2 += 15f;
+        }
+        if (angle) {
+            baling -= 40f;
+        }
+        if (angle1) {
+            baling1 -= 10f;
         }
         gl.glFlush();
     }
@@ -188,7 +197,28 @@ public class GLRenderer implements GLEventListener {
             } else {
                 silinder1 = true;
             }
-            
+        } //tombol 3
+        else if (keyCode == 51) {
+            if (silinder2) {
+                silinder2 = false;
+            } else {
+                silinder2 = true;
+            }
+        } //tombol 9
+        else if (keyCode == 57) {
+            if (angle) {
+                angle = false;
+            } else {
+                angle = true;
+            }
+        } //tombol 0
+        else if (keyCode == 48) {
+            if (angle1) {
+                angle1 = false;
+            } else {
+                angle1 = true;
+            }
+
         }
     }
 }
