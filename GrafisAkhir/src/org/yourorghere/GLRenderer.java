@@ -135,11 +135,10 @@ public class GLRenderer implements GLEventListener {
         gl.glTranslatef(-0.65f, 1f, 0.30f);
         gl.glRotatef(-90, 1.0f, 0.0f, 0.0f);
         Objek.tiang(gl);
-<<<<<<< HEAD
+
 
 //        angle += 40f;
 //        angle1 += 10f;
-=======
         gl.glPushMatrix();
          gl.glTranslatef(-1f,-1f, -0.70f);
         gl.glRotatef(-50, 0f, 0f, 0.1f);
@@ -149,10 +148,7 @@ public class GLRenderer implements GLEventListener {
          gl.glTranslatef(1.1f,-1.2f, 1.1f);
         gl.glRotatef(90, 0f, 1f, 0f);
         Objek.pintu(gl);
-        angle += 40f;
-        angle1 += 10f;
-
->>>>>>> 54a7ae70cf2cc4fa70badad48fce5a0452254bff
+       
         if (silinder) {
             silinderAngle += 15f;
         }
