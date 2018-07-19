@@ -272,4 +272,23 @@ public class Objek {
         gl.glVertex3f(1.5f, 0.3f, 0.0f);
         gl.glEnd();
     }
+     static void pintu(GL gl){ 
+          gl.glColor3f(0.75f, 0.75f, 0.75f);
+        gl.glBegin(GL.GL_POLYGON);/*  bagian kiri */
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.0f, 0.0f);
+        gl.glVertex3f(0.0f, 1.0f, 1f);
+        gl.glVertex3f(0.0f, 0.0f, 1f);
+        gl.glEnd();
+        gl.glEnd();
+    }
+    static void wind(GL gl){ 
+          gl.glColor3f(0.80f, 0.80f, 0.90f);
+        gl.glBegin(GL.GL_POLYGON);/*  bagian depan*/
+        gl.glVertex3f(0.0f, 0.0f, 0.0f);
+        gl.glVertex3f(0.0f, 2.0f, 0.0f);
+        gl.glVertex3f(0.0f, 2.0f, 1.5f);
+        gl.glVertex3f(0.0f, 0.0f, 1.5f);
+        gl.glEnd();
+    }
 }
